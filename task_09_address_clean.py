@@ -1,4 +1,3 @@
-import re
 # Исходные адреса
 addresses = [
     ' г. Москва, ул. Ленина, д. 10 ',
@@ -8,25 +7,27 @@ addresses = [
 
 print("=== СРАВНЕНИЕ ===\n")
 
-for i, addr in enumerate(addresses, start=1):
+# Обрабатываем каждый адрес по индексу
+for i in range(len(addresses)):
+    addr = addresses[i]
+    
     # Шаг 1: удаляем пробелы в начале и конце
     addr = addr.strip()
     
     # Шаг 2: добавляем пробелы после точек в сокращениях
-    addr = addr.replace('г.', 'г. ')
-    addr = addr.replace('ул.', 'ул. ')
-    addr = addr.replace('д.', 'д. ')
+    addr = addr.replace('.', '. ')
     
     # Шаг 3: добавляем пробел после запятой, если его нет
     addr = addr.replace(',', ', ')
     
-    # Шаг 4: заменяем множественные пробелы на один
-    addr = re.sub(r'\s+', ' ', addr)
+    # Шаг 4: заменяем множественные пробелы на один (простой способ)
+    while '  ' in addr:
+        addr = addr.replace('  ', ' ')
     
     # Шаг 5: убираем пробел перед точкой (если вдруг появился)
     addr = addr.replace(' .', '.')
     
     # Вывод
-    print(f"#{i}")
-    print(f"ДО: '{addresses[i-1]}'")
+    print(f"#{i+1}")
+    print(f"ДО: '{addresses[i]}'")
     print(f"ПОСЛЕ: '{addr}'\n")
